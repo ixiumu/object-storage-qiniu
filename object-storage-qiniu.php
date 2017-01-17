@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: 云存储（七牛）
- * Plugin URI: http://www.xiumu.org/
+ * Plugin URI: https://github.com/ixiumu/object-storage-qiniu
  * Description: 上传本地附件到云存储空间
  * Author: 朽木
  * Author URI: http://www.xiumu.org/
