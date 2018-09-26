@@ -7,7 +7,7 @@
  * Author: 朽木
  * Author URI: http://www.xiumu.org/
  * Text Domain: 云存储 七牛
- * Version: 0.0.1
+ * Version: 0.0.2
  * License: GPLv2
 */
 
@@ -61,9 +61,12 @@ function storage_options()
     register_setting('storage-options', 'storage-accessKey', 'strval');
     register_setting('storage-options', 'storage-secretKey', 'strval');
     register_setting('storage-options', 'storage-bucket', 'strval');
-
+    
     // 拓展名
     register_setting('storage-options', 'storage-extensions', 'strval');
+
+    // CDN域名
+    register_setting('storage-options', 'storage-baseurl', 'strval');
 
     // 同步
     register_setting('storage-options', 'storage-delobject', 'boolval');
@@ -241,10 +244,17 @@ add_action('edit_attachment', 'storage_upload_file');
 add_action('delete_attachment', 'storage_delete_object');
 add_filter('wp_update_attachment_metadata', 'storage_thumb_upload');
 
-if(get_option("storage-delobject") == 1) {
-    add_filter('wp_delete_file', 'storage_delete_object');
+if($baseurl = get_option('storage-baseurl')) {
+    add_filter( 'upload_dir', function( $args ) {
+        $args['baseurl'] = $baseurl;
+        return $args;
+    });
 }
 
+
+if(get_option('storage-delobject') == 1) {
+    add_filter('wp_delete_file', 'storage_delete_object');
+}
 
 // -------------------- 私有函数 --------------------
 
@@ -297,7 +307,6 @@ function __upload_object($filepath) {
         list($ret, $err) = $uploadMgr->putFile($token, $object_name, $filepath);
 
         if ($err != null) {
-
             // var_dump($err);exit;
             return false;
         }
