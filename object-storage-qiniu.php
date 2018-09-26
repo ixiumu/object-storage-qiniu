@@ -244,12 +244,13 @@ add_action('edit_attachment', 'storage_upload_file');
 add_action('delete_attachment', 'storage_delete_object');
 add_filter('wp_update_attachment_metadata', 'storage_thumb_upload');
 
-if($baseurl = get_option('storage-baseurl')) {
-    add_filter( 'upload_dir', function( $args ) {
+add_filter( 'upload_dir', function( $args ) {
+    $baseurl = get_option('storage-baseurl');
+    if ($baseurl) {
         $args['baseurl'] = $baseurl;
-        return $args;
-    });
-}
+    }
+    return $args;
+});
 
 
 if(get_option('storage-delobject') == 1) {
