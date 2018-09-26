@@ -51,11 +51,11 @@
 				</tr>
 		</table>
 
-		<h3>文件类型</h3>
+		<h3>拓展选项</h3>
 
 		<table class="form-table">
 				<tr>
-						<th>拓展名:</th>
+						<th>文件类型拓展名:</th>
 						<td>
 								<input name="storage-extensions" type="text"
 												size="15" value="<?php echo esc_attr(
@@ -66,10 +66,18 @@
 
 						</td>
 				</tr>
-		</table>
+				<tr>
+						<th>加速域名:</th>
+						<td>
+								<input name="storage-baseurl" type="text"
+												size="15" value="<?php echo esc_attr(
+																				 get_option('storage-baseurl')
+																				 ); ?>" class="regular-text code"/>
 
-		<h3>拓展选项</h3>
-		<table class="form-table">
+								<p class="description">绑定的加速域名，包含完整目录，结尾不需要加<code>/</code>。</p>
+
+						</td>
+				</tr>
 				<tr>
 						<td colspan="2">
                 <input id="delobject" type="checkbox" name="storage-delobject"
